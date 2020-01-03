@@ -1,10 +1,9 @@
-
-## **TAREA 1**
+# Práctica 1
 Los algoritmos de cifrado asimétrico utilizan dos claves para el cifrado y descifrado de mensajes. Cada persona involucrada (receptor y emisor) debe disponer, por tanto, de una pareja de claves pública y privada. Para generar nuestra pareja de claves con gpg utilizamos la opción --gen-key:
 
 Para esta práctica no es necesario que indiquemos frase de paso en la generación de las claves (al menos para la clave pública).
 
-1. Genera un par de claves (pública y privada). ¿En que directorio se guarda las claves de un usuario?
+### 1. Genera un par de claves (pública y privada). ¿En que directorio se guarda las claves de un usuario?
 ~~~
 gpg --gen-key
 ~~~
@@ -31,7 +30,7 @@ $ gpg --export-secret-key -a Paloma R. Garcia Campon > clave-pri.key
 Al usar el segundo comando, el que crea la clave privada, nos pide la frase de paso, si la hemos introducido al crear el certificado. 
 
 
-2. Lista las claves públicas que tienes en tu almacén de claves. Explica los distintos datos que nos muestra. ¿Cómo deberías haber generado las claves para indicar, por ejemplo, que tenga un 1 mes de validez?
+### 2. Lista las claves públicas que tienes en tu almacén de claves. Explica los distintos datos que nos muestra. ¿Cómo deberías haber generado las claves para indicar, por ejemplo, que tenga un 1 mes de validez?
 
 ~~~
 $ gpg --list-key
@@ -86,7 +85,7 @@ sub   rsa3072 2019-10-07 [E] [caduca: 2019-11-06
 
 
 
-3. Lista las claves privadas de tu almacén de claves.
+### 3. Lista las claves privadas de tu almacén de claves.
 ~~~
 $ gpg --list-secret-keys
 /home/paloma/.gnupg/pubring.kbx
@@ -99,10 +98,10 @@ ssb   rsa3072 2019-10-07 [E] [caduca: 2019-11-06]
 
 
 
-## **TAREA 2**
+# Práctica 2
 Para enviar archivos cifrados a otras personas, necesitamos disponer de sus claves públicas. De la misma manera, si queremos que cierta persona pueda enviarnos datos cifrados, ésta necesita conocer nuestra clave pública. Para ello, podemos hacérsela llegar por email por ejemplo. Cuando recibamos una clave pública de otra persona, ésta deberemos incluirla en nuestro keyring o anillo de claves, que es el lugar donde se almacenan todas las claves públicas de las que disponemos.
 
-1. Exporta tu clave pública en formato ASCII y guardalo en un archivo nombre_apellido.asc y envíalo al compañero con el que vas a hacer esta práctica.
+### 1. Exporta tu clave pública en formato ASCII y guardalo en un archivo nombre_apellido.asc y envíalo al compañero con el que vas a hacer esta práctica.
 
 ~~~
 $ gpg --export -a Paloma R. Garcia Campon > PalomaR.Garcia.asc
@@ -110,14 +109,14 @@ $ scp PalomaR.Garcia.asc ftirado@172.22.9.13:
 ~~~
 
 
-2. Importa las claves públicas recibidas de vuestro compañero.
+### 2. Importa las claves públicas recibidas de vuestro compañero.
 
 ~~~
 gpg --import Fernando_tirado.asc 
 ~~~
 
 
-3. Comprueba que las claves se han incluido correctamente en vuestro keyring.
+### 3. Comprueba que las claves se han incluido correctamente en vuestro keyring.
 
 ~~~
 $ gpg --list-keys
@@ -135,10 +134,10 @@ sub   rsa3072 2019-10-07 [E] [caduca: 2021-10-06]
 ~~~
 
 
-## **TAREA 3**
+# Práctica 3
 Tras realizar el ejercicio anterior, podemos enviar ya documentos cifrados utilizando la clave pública de los destinatarios del mensaje.
 
-1. Cifraremos un archivo cualquiera y lo remitiremos por email a uno de nuestros compañeros que nos proporcionó su clave pública.
+### 1. Cifraremos un archivo cualquiera y lo remitiremos por email a uno de nuestros compañeros que nos proporcionó su clave pública.
 ~~~
 paloma@coatlicue:~$ touch prueba.txt
 paloma@coatlicue:~$ gpg -e -u "Paloma R. Garcia Campon" -r "Fernando Tirado" prueba.txt 
@@ -157,14 +156,14 @@ puede contestar sí a la siguiente pregunta.
 ~~~
 
 
-2. Nuestro compañero, a su vez, nos remitirá un archivo cifrado para que nosotros lo descifremos.
+### 2. Nuestro compañero, a su vez, nos remitirá un archivo cifrado para que nosotros lo descifremos.
 ~~~
 paloma@coatlicue:~$ ls
  palomita.txt.gpg
 ~~~
 
 
-3. Tanto nosotros como nuestro compañero comprobaremos que hemos podido descifrar los mensajes recibidos respectivamente.
+### 3. Tanto nosotros como nuestro compañero comprobaremos que hemos podido descifrar los mensajes recibidos respectivamente.
 ~~~
 paloma@coatlicue:~$ gpg -d palomita.txt.gpg 
 gpg: cifrado con clave de 3072 bits RSA, ID D7F9FDBB7151CA51, creada el 2019-10-07
@@ -172,25 +171,25 @@ gpg: cifrado con clave de 3072 bits RSA, ID D7F9FDBB7151CA51, creada el 2019-10-
 ~~~
 
 
-4. Por último, enviaremos el documento cifrado a alguien que no estaba en la lista de destinatarios y comprobaremos que este usuario no podrá descifrar este archivo.
+### 4. Por último, enviaremos el documento cifrado a alguien que no estaba en la lista de destinatarios y comprobaremos que este usuario no podrá descifrar este archivo.
 ~~~
 $ gpg -d /tmp/mozilla_paloma0/prueba.txt.gpg 
 gpg: cifrado con clave RSA, ID EDDAA98D51C90308
 gpg: descifrado fallido: No secret key
 ~~~
 
-5. Para terminar, indica los comandos necesarios para borrar las claves públicas y privadas que posees.
+### 5. Para terminar, indica los comandos necesarios para borrar las claves públicas y privadas que posees.
 Para eliminar una clave pública se utiliza la opción --dekete-key:
 ~~~
 gpg --delete-key Fernando Tirado
 ~~~
 
 
-## **Tarea 4**: Exportar clave a un servidor público de claves PGP (2 puntos)
+# Práctica 4: Exportar clave a un servidor público de claves PGP (2 puntos)
 
 Para distribuir las claves públicas es mucho más habitual utilizar un servidor específico para distribuirlas, que permite a los clientes añadir las claves públicas a sus anillos de forma mucho más sencilla.
 
-1. Genera la clave de revocación de tu clave pública para utilizarla en caso de que haya problemas.
+### 1. Genera la clave de revocación de tu clave pública para utilizarla en caso de que haya problemas.
 
 ~~~
 paloma@coatlicue:~$ gpg --output revoke.paloma.asc --gen-revoke FD52AA5481FD0E1518011D83952393CC31351D81
@@ -224,14 +223,14 @@ a otras personas!
 ~~~
 
 
-2. Exporta tu clave pública al servidor pgp.rediris.es
+### 2. Exporta tu clave pública al servidor pgp.rediris.es
 
 ~~~
 paloma@coatlicue:~$ gpg --keyserver pgp.rediris.es --send-key FD52AA5481FD0E1518011D83952393CC31351D81
 gpg: enviando clave 952393CC31351D81 a hkp://pgp.rediris.es
 ~~~
 
-3. Borra la clave pública de alguno de tus compañeros de clase e impórtala ahora del servidor público de rediris.
+### 3. Borra la clave pública de alguno de tus compañeros de clase e impórtala ahora del servidor público de rediris.
 
 ~~~
 paloma@coatlicue:~$ gpg --delete-key A615146E82E272C899A34100F405106DBBABFB72
@@ -276,8 +275,8 @@ sub   rsa3072 2019-10-07 [E] [caduca: 2019-11-06]
 ~~~
 
 
-## **TAREA 5**
-1. Genera un par de claves (pública y privada).
+# Práctica 5
+### 1. Genera un par de claves (pública y privada).
 Para obtener la privada:
 ~~~
 paloma@coatlicue:~$ sudo openssl genrsa -out paloma.pem 2048
@@ -294,7 +293,7 @@ paloma@coatlicue:~$ sudo openssl rsa -in paloma.pem -out paloma.pub.pem
 writing RSA key
 ~~~
 
-2. Envía tu clave pública a un compañero.
+### 2. Envía tu clave pública a un compañero.
 ~~~
 paloma@coatlicue:~$ sudo scp paloma.pub.pem ftirado@172.22.7.162:
 The authenticity of host '172.22.7.162 (172.22.7.162)' can't be established.
@@ -306,13 +305,13 @@ paloma.pub.pem
 ~~~
 
 
-3. Utilizando la clave pública cifra un fichero de texto y envíalo a tu compañero.
+### 3. Utilizando la clave pública cifra un fichero de texto y envíalo a tu compañero.
 ~~~
 paloma@coatlicue:~$ openssl rsautl -encrypt -in fichero.txt -out fich.enc -inkey miclave-pub.pem 
 ~~~
 
 
-4. Tu compañero te ha mandado un fichero cifrado, muestra el proceso para el descifrado.
+### 4. Tu compañero te ha mandado un fichero cifrado, muestra el proceso para el descifrado.
 ~~~
 paloma@coatlicue:~$ cat paloma.txt.enc 
 U2FsdGVkX1/R8nWjMed34IyJNPkyZTadbtfWA3VSb71OQRjMAD/g7b6zYhv4f5Vp
